@@ -123,13 +123,13 @@ enum class networks : uint16_t
 {
 	invalid = 0x0,
 	// Low work parameters, publicly known genesis key, dev IP ports
-	nano_dev_network = 0x5241, // 'R', 'A'
+	nano_dev_network = 0x5041, // 'R', 'A'
 	// Normal work parameters, secret beta genesis key, beta IP ports
-	nano_beta_network = 0x5242, // 'R', 'B'
+	nano_beta_network = 0x5042, // 'R', 'B'
 	// Normal work parameters, secret live key, live IP ports
-	nano_live_network = 0x5243, // 'R', 'C'
+	nano_live_network = 0x5043, // 'R', 'C'
 	// Normal work parameters, secret test genesis key, test IP ports
-	nano_test_network = 0x5258, // 'R', 'X'
+	nano_test_network = 0x5058, // 'R', 'X'
 };
 
 enum class work_version
@@ -216,10 +216,10 @@ public:
 	{
 		if (is_live_network ())
 		{
-			default_node_port = 7075;
-			default_rpc_port = 7076;
-			default_ipc_port = 7077;
-			default_websocket_port = 7078;
+			default_node_port = 7045;
+			default_rpc_port = 7046;
+			default_ipc_port = 7047;
+			default_websocket_port = 7048;
 		}
 		else if (is_beta_network ())
 		{
