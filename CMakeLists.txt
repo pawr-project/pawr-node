@@ -47,9 +47,9 @@ if(MSVC)
   add_definitions(/MP)
 endif()
 
-set(CPACK_PACKAGE_VERSION_MAJOR "24")
-set(CPACK_PACKAGE_VERSION_MINOR "1")
-set(CPACK_PACKAGE_VERSION_PATCH "1")
+set(CPACK_PACKAGE_VERSION_MAJOR "1")
+set(CPACK_PACKAGE_VERSION_MINOR "8")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
 if(CI_BUILD AND CI_VERSION_PRE_RELEASE)
   set(CPACK_PACKAGE_VERSION_PRE_RELEASE "${CI_VERSION_PRE_RELEASE}")
 else()
@@ -173,13 +173,13 @@ set_property(
   CACHE ACTIVE_NETWORK PROPERTY STRINGS nano_dev_network nano_beta_network
                                 nano_live_network nano_test_network)
 set(CPACK_PACKAGE_NAME
-    "nano-node"
+    "paw-node"
     CACHE STRING "" FORCE)
 set(CPACK_NSIS_PACKAGE_NAME
-    "Nano"
+    "Paw"
     CACHE STRING "" FORCE)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY
-    "nanocurrency"
+    "pawcurrency"
     CACHE STRING "" FORCE)
 set(NANO_SERVICE "nanocurrency.service")
 set(NANO_PREFIX "")
@@ -703,9 +703,13 @@ if(NANO_GUI OR RAIBLOCKS_GUI)
     set_target_properties(
       nano_wallet_com
       PROPERTIES COMPILE_FLAGS "-DBOOST_ASIO_HAS_STD_ARRAY=1"
-                 OUTPUT_NAME "nano_wallet"
+                 OUTPUT_NAME "paw_wallet"
                  SUFFIX ".com")
   endif()
+
+  set_target_properties(nano_node PROPERTIES OUTPUT_NAME "paw_node")
+  set_target_properties(nano_rpc PROPERTIES OUTPUT_NAME "paw_rpc")
+  set_target_properties(nano_wallet PROPERTIES OUTPUT_NAME "paw_wallet")
 
   set_target_properties(
     qt nano_wallet PROPERTIES COMPILE_FLAGS
@@ -790,11 +794,11 @@ if(NANO_GUI OR RAIBLOCKS_GUI)
         "DeleteRegKey HKLM 'SYSTEM\\\\CurrentControlSet\\\\Services\\\\EventLog\\\\Nano${NANO_PREFIX}'"
     )
     set(CPACK_NSIS_MUI_ICON ${CMAKE_SOURCE_DIR}/Nano.ico)
-    set(CPACK_NSIS_DISPLAY_NAME "Nano${NANO_PREFIX}")
-    set(CPACK_NSIS_URL_INFO_ABOUT "https://nano.org")
-    set(CPACK_NSIS_CONTACT "info@nano.org")
-    set(CPACK_NSIS_MENU_LINKS "nano_wallet.exe" "Nano Wallet"
-                              "https://nano.org" "Nano website")
+    set(CPACK_NSIS_DISPLAY_NAME "Paw${NANO_PREFIX}")
+    set(CPACK_NSIS_URL_INFO_ABOUT "https://paw.digital")
+    set(CPACK_NSIS_CONTACT "team@paw.digital")
+    set(CPACK_NSIS_MENU_LINKS "paw_wallet.exe" "Paw Wallet"
+                              "https://paw.digital" "Paw website")
     set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
     get_target_property(Qt5WindowsPlugin Qt5::QWindowsIntegrationPlugin
                         LOCATION)
