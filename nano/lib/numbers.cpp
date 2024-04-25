@@ -87,12 +87,12 @@ bool nano::public_key::decode_account (std::string const & source_a)
 	auto error (source_a.size () < 5);
 	if (!error)
 	{
-		auto paw_prefix (source_a[0] == 'p' && source_a[1] == 'a' && source_a[2] == 'w' && (source_a[3] == '_' || source_a[3] == '-'));
+		auto pawr_prefix (source_a[0] == 'p' && source_a[1] == 'a' && source_a[2] == 'w' && (source_a[3] == '_' || source_a[3] == '-'));
 		auto node_id_prefix = (source_a[0] == 'n' && source_a[1] == 'o' && source_a[2] == 'd' && source_a[3] == 'e' && source_a[4] == '_');
-		error = (paw_prefix && source_a.size () != 64);
+		error = (pawr_prefix && source_a.size () != 64);
 		if (!error)
 		{
-			if (paw_prefix || node_id_prefix)
+			if (pawr_prefix || node_id_prefix)
 			{
 				auto i (source_a.begin () + 4);
 				if (*i == '1' || *i == '3')
