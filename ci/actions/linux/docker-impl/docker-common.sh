@@ -27,7 +27,7 @@ elif [[ "$GITHUB_WORKFLOW" = "Test" ]]; then
 fi
 
 if [[ "$GITHUB_WORKFLOW" != "Develop Branch Dockers Deploy" ]]; then
-    docker_image_name="nanocurrency/nano${network_tag_suffix}"
+    docker_image_name="pawr/pawr-node${network_tag_suffix}"
 fi
 
 docker_build()
@@ -38,7 +38,7 @@ docker_build()
     fi
 
     if [[ "$GITHUB_WORKFLOW" != "Develop Branch Dockers Deploy" ]]; then
-        ghcr_image_name="ghcr.io/${GITHUB_REPOSITORY}/nano${network_tag_suffix}"
+        ghcr_image_name="ghcr.io/${GITHUB_REPOSITORY}/pawr-node${network_tag_suffix}"
         "$scripts"/build-docker-image.sh docker/node/Dockerfile "$docker_image_name" --build-arg NETWORK="$network" --build-arg CI_BUILD=true --build-arg CI_VERSION_PRE_RELEASE="$ci_version_pre_release" --build-arg CI_TAG="$CI_TAG"
         for tag in "${tags[@]}"; do
             # Sanitize docker tag
@@ -55,18 +55,18 @@ docker_build()
 docker_deploy()
 {
     if [ -n "$DOCKER_PASSWORD" ]; then
-        echo "$DOCKER_PASSWORD" | docker login -u nanoreleaseteam --password-stdin
+        echo "$DOCKER_PASSWORD" | docker login -u pawr --password-stdin
         if [[ "$GITHUB_WORKFLOW" = "Develop Branch Dockers Deploy" ]]; then
-            "$scripts"/custom-timeout.sh 30 docker push "nanocurrency/nano-env:base"
-            "$scripts"/custom-timeout.sh 30 docker push "nanocurrency/nano-env:gcc"
-            "$scripts"/custom-timeout.sh 30 docker push "nanocurrency/nano-env:clang"
+            "$scripts"/custom-timeout.sh 30 docker push "pawr/pawr-env:base"
+            "$scripts"/custom-timeout.sh 30 docker push "pawr/pawr-env:gcc"
+            "$scripts"/custom-timeout.sh 30 docker push "pawr/pawr-env:clang"
             echo "Deployed nano-env"
             exit 0
         else
             if [[ "$GITHUB_WORKFLOW" = "Live" ]]; then
-                tags=$(docker images --format '{{.Repository}}:{{.Tag }}' | grep nanocurrency | grep -vE "env|ghcr.io|none|latest")
+                tags=$(docker images --format '{{.Repository}}:{{.Tag }}' | grep pawr | grep -vE "env|ghcr.io|none|latest")
             else
-                tags=$(docker images --format '{{.Repository}}:{{.Tag }}' | grep nanocurrency | grep -vE "env|ghcr.io|none")
+                tags=$(docker images --format '{{.Repository}}:{{.Tag }}' | grep pawr | grep -vE "env|ghcr.io|none")
             fi
             for a in $tags; do
                 "$scripts"/custom-timeout.sh 30 docker push "$a"
